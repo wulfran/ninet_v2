@@ -20,3 +20,7 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+Route::group(['as' => 'panel.', 'prefix' => '/panel', 'middleware' => 'auth'], function(){
+    Route::get('', ['as' => 'dashboard', 'uses' => 'DashboardController@index']);
+});
