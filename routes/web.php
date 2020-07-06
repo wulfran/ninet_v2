@@ -16,16 +16,10 @@ use Illuminate\Support\Facades\Route;
 
 Auth::routes();
 
-Route::group(['as' => 'panel.', 'prefix' => '/panel', 'middleware' => 'auth'], function(){
-    Route::get('', ['as' => 'dashboard', 'uses' => 'DashboardController@index']);
-});
-
-Route::get('test', ['as' => 'test', 'uses' => 'TestController@index']);
-
-
 $panelRoutes = [
     '/',
     '/panel/dashboard',
+    '/panel/users',
 ];
 
 foreach ($panelRoutes as $route) {
