@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,14 +14,20 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
 Auth::routes();
-
-Route::get('/home', 'HomeController@index')->name('home');
 
 Route::group(['as' => 'panel.', 'prefix' => '/panel', 'middleware' => 'auth'], function(){
     Route::get('', ['as' => 'dashboard', 'uses' => 'DashboardController@index']);
 });
+
+Route::get('test', ['as' => 'test', 'uses' => 'TestController@index']);
+
+
+$panelRoutes = [
+    '/',
+    '/panel/dashboard',
+];
+
+foreach ($panelRoutes as $route) {
+    Route::get($route, [HomeController::class, 'index']);
+}
