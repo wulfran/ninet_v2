@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Middleware\LoginTest;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 

@@ -10,7 +10,11 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
 
     <!-- Scripts -->
-
+    <script>
+        window.APP = {
+            authToken: '{{ \Illuminate\Support\Facades\Cookie::get(\Laravel\Passport\Passport::cookie()) }}'
+        }
+    </script>
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
@@ -25,5 +29,6 @@
     </div>
 
     <script src="{{ asset('js/app.js') }}" defer></script>
+    @stack('js')
 </body>
 </html>

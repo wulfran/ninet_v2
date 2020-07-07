@@ -17,5 +17,7 @@ class DatabaseSeeder extends Seeder
             'name' => 'admin',
             'password' => \Illuminate\Support\Facades\Hash::make('secret'),
         ]);
+
+        \Illuminate\Support\Facades\Artisan::call('passport:install');
     }
 }

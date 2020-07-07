@@ -2051,16 +2051,27 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
       drawer: false,
-      menu: []
+      menu: [],
+      csrf: document.head.querySelector('meta[name="csrf-token"]').content
     };
   },
   created: function created() {
     var _this = this;
 
+    console.log(window);
     this.$router.options.routes[0].children.forEach(function (route) {
       if (/^(panel.*)$/.test(route.name)) {
         _this.menu.push({
@@ -37850,9 +37861,22 @@ var render = function() {
                 _vm.drawer = !_vm.drawer
               }
             }
-          })
+          }),
+          _vm._v(" "),
+          [
+            _c("div", { staticClass: "right" }, [
+              _c("form", { attrs: { action: "/logout", method: "post" } }, [
+                _c("input", {
+                  attrs: { type: "hidden", name: "_token" },
+                  domProps: { value: _vm.csrf }
+                }),
+                _vm._v(" "),
+                _c("input", { attrs: { type: "submit", value: "logout" } })
+              ])
+            ])
+          ]
         ],
-        1
+        2
       ),
       _vm._v(" "),
       _c(

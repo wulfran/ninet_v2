@@ -31,6 +31,15 @@
             :clipped-left="$vuetify.breakpoint.lgAndUp"
         >
             <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
+
+            <template>
+                <div class="right">
+                    <form action="/logout" method="post">
+                        <input type="hidden" name="_token" :value="csrf">
+                        <input type="submit" value="logout">
+                    </form>
+                </div>
+            </template>
         </v-app-bar>
         <v-main>
             <v-container
@@ -50,9 +59,11 @@
             return {
                 drawer: false,
                 menu: [],
+                csrf: document.head.querySelector('meta[name="csrf-token"]').content,
             }
         },
         created() {
+            console.log(window);
             this.$router.options.routes[0].children.forEach(route => {
                 if (/^(panel.*)$/.test(route.name)){
                     this.menu.push({
