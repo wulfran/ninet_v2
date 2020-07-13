@@ -29,6 +29,8 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
+    protected $dates = ['created_at', 'updated_at'];
+
     /**
      * The attributes that should be cast to native types.
      *
@@ -38,10 +40,13 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function rememberAccessToken(string $token)
+    public static function getColumnsForTable()
     {
-        $sessionTokens = session()->get('accessToken');
+        $columns = [];
+        foreach (User::first()->getAttributes() as $key => $value) {
+            $columns[] = $key;
+        }
 
-        dd($sessionTokens);
+        return $columns;
     }
 }
