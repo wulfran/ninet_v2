@@ -1,6 +1,9 @@
 <?php
 
+use App\Models\User;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Hash;
 
 class DatabaseSeeder extends Seeder
 {
@@ -11,13 +14,14 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // $this->call(UserSeeder::class);
-        \App\Models\User::create([
+        User::create([
             'email' => 'admin@ninet.pl',
             'name' => 'admin',
-            'password' => \Illuminate\Support\Facades\Hash::make('secret'),
+            'password' => Hash::make('secret'),
         ]);
 
-        \Illuminate\Support\Facades\Artisan::call('passport:install');
+        Artisan::call('passport:install');
+
+        factory(User::class, 20)->create();
     }
 }
