@@ -5,15 +5,28 @@ import Panel from './Pages/Panel/index';
 export default [
     {
         path: '/',
-        name: 'layout',
+        name: 'home',
         component: Layout,
         children: [
-            { path: '/', name: 'home.index', component: HomePage.Index },
+            {
+                path: '/',
+                name: 'home.index',
+                display: 'Home',
+                icon: 'mdi-home',
+                component: HomePage.Index
+            },
+        ]
+    },
+    {
+        path: '/panel',
+        name: 'panel',
+        component: Layout,
+        children: [
             {
                 path: '/panel/dashboard',
                 name: 'panel.dashboard',
                 display: 'Dashboard',
-                icon: 'mdi-home',
+                icon: 'mdi-tablet-dashboard',
                 component: Panel.Dashboard
             },
             {
@@ -24,5 +37,5 @@ export default [
                 component: Panel.Users
             },
         ]
-    }
+    },
 ]

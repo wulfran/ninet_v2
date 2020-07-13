@@ -2069,24 +2069,55 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   created: function created() {
-    var _this = this;
+    this.buildMenu();
+  },
+  methods: {
+    link: function link(name) {
+      var _this = this;
 
-    console.log(window);
-    this.$router.options.routes[0].children.forEach(function (route) {
-      if (/^(panel.*)$/.test(route.name)) {
-        _this.menu.push({
+      console.log(name);
+
+      if (this.$router.currentRoute.name !== name) {
+        this.$router.push({
+          name: name
+        }).then(function () {
+          _this.buildMenu();
+        });
+      }
+    },
+    buildMenu: function buildMenu() {
+      this.menu = [];
+
+      if (/^(panel.*)$/.test(this.$router.currentRoute.name)) {
+        this.setMenuItems(1);
+      } else {
+        this.setMenuItems(0);
+      }
+    },
+    setMenuItems: function setMenuItems(menuType) {
+      var _this2 = this;
+
+      if (menuType === 1) {
+        this.menu.push({
+          display: 'Back',
+          icon: 'mdi-arrow-left-circle',
+          name: 'home.index'
+        });
+      }
+
+      this.$router.options.routes[menuType].children.forEach(function (route) {
+        _this2.menu.push({
           display: route.display,
           icon: route.icon,
           name: route.name
         });
-      }
-    });
-  },
-  methods: {
-    link: function link(name) {
-      if (this.$router.currentRoute.name !== name) {
-        this.$router.push({
-          name: name
+      });
+
+      if (menuType !== 1) {
+        this.menu.push({
+          display: 'Panel',
+          icon: 'mdi-tablet-dashboard',
+          name: 'panel.dashboard'
         });
       }
     }
@@ -97313,17 +97344,24 @@ __webpack_require__.r(__webpack_exports__);
 
 /* harmony default export */ __webpack_exports__["default"] = ([{
   path: '/',
-  name: 'layout',
+  name: 'home',
   component: _layouts_Layout__WEBPACK_IMPORTED_MODULE_1__["default"],
   children: [{
     path: '/',
     name: 'home.index',
+    display: 'Home',
+    icon: 'mdi-home',
     component: _Pages_Home__WEBPACK_IMPORTED_MODULE_0__["default"].Index
-  }, {
+  }]
+}, {
+  path: '/panel',
+  name: 'panel',
+  component: _layouts_Layout__WEBPACK_IMPORTED_MODULE_1__["default"],
+  children: [{
     path: '/panel/dashboard',
     name: 'panel.dashboard',
     display: 'Dashboard',
-    icon: 'mdi-home',
+    icon: 'mdi-tablet-dashboard',
     component: _Pages_Panel_index__WEBPACK_IMPORTED_MODULE_2__["default"].Dashboard
   }, {
     path: '/panel/users',

@@ -63,21 +63,45 @@
             }
         },
         created() {
-            console.log(window);
-            this.$router.options.routes[0].children.forEach(route => {
-                if (/^(panel.*)$/.test(route.name)){
+            this.buildMenu();
+        },
+        methods: {
+            link(name) {
+                if (this.$router.currentRoute.name !== name) {
+                    this.$router.push({name: name}).then(() => {
+                        this.buildMenu();
+                    });
+                }
+            },
+            buildMenu() {
+                this.menu = [];
+                if (/^(panel.*)$/.test(this.$router.currentRoute.name)) {
+                    this.setMenuItems(1)
+                } else {
+                    this.setMenuItems(0);
+                }
+            },
+            setMenuItems(menuType) {
+                if(menuType === 1) {
+                    this.menu.push({
+                        display: 'Back',
+                        icon: 'mdi-arrow-left-circle',
+                        name: 'home.index'
+                    })
+                }
+                this.$router.options.routes[menuType].children.forEach(route => {
                     this.menu.push({
                         display: route.display,
                         icon: route.icon,
                         name: route.name
                     })
-                }
-            });
-        },
-        methods: {
-            link(name) {
-                if (this.$router.currentRoute.name !== name) {
-                    this.$router.push({name: name});
+                });
+                if (menuType !== 1) {
+                    this.menu.push({
+                        display: 'Panel',
+                        icon: 'mdi-tablet-dashboard',
+                        name: 'panel.dashboard'
+                    })
                 }
             }
         }
