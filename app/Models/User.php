@@ -40,6 +40,11 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    public function shoppingLists()
+    {
+        return $this->hasMany(ShoppingList::class);
+    }
+
     public static function getColumnsForTable()
     {
         $columns = [];
