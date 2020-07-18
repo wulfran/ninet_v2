@@ -1,6 +1,5 @@
 <?php
 
-use App\Models\ShoppingList;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Artisan;
@@ -24,6 +23,7 @@ class DatabaseSeeder extends Seeder
         Artisan::call('passport:install');
 
         factory(User::class, 20)->create();
-        factory(ShoppingList::class, 40)->create();
+
+        $this->call(ShoppingListsSeeder::class);
     }
 }
