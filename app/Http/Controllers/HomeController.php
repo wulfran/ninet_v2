@@ -2,8 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Address;
-use App\Models\Company;
 use Illuminate\Contracts\Support\Renderable;
 
 class HomeController extends Controller
@@ -25,10 +23,6 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $add = Address::find(57);
-        $c = Company::first();
-
-        dd($add->company);
         return view('home');
     }
 }
