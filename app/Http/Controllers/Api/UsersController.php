@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class UsersController extends Controller
 {
@@ -64,5 +66,29 @@ class UsersController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function login()
+    {
+        $request = request()->all();
+
+        if ($this->attemptLogin($request)) {
+            $redirectResponse = $this->sendLoginResponse($request);
+
+            $user = Auth::user();
+
+            $tokenResult = $user->createToken('Personal Access Token');
+
+            $token = $tokenResult->token;
+
+            if ($request->remember_me)
+                $token->expires_at = Carbon::now()->addWeeks(1);
+
+            $token->save();
+
+            return $tokenResult->token;
+        }
+
+        return false;
     }
 }

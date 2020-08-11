@@ -18,8 +18,11 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+Route::post('/login', ['as' => 'api.login', 'uses' => 'Api\UsersController@login']);
+
 Route::get('/users', ['as' => 'users.list', 'uses' => 'Api\UsersController@index'])->middleware('auth:api');
+
 
 Route::get('/test', function (){
     return 'Success';
-});
+})->middleware('auth:api');
