@@ -36,6 +36,14 @@ export default [
                 icon: 'mdi-account-multiple',
                 component: Panel.Users
             },
+            {
+                path: '/panel/companies',
+                name: 'panel.companies',
+                display: 'Companies',
+                icon: 'mdi-account-multiple',
+                apiUrl: 'companies',
+                component: Panel.Datatable
+            },
         ]
     },
 ]

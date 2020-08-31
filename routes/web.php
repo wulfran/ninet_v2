@@ -20,6 +20,7 @@ $panelRoutes = [
     '/',
     '/panel/dashboard',
     '/panel/users',
+    '/panel/companies',
 ];
 
 foreach ($panelRoutes as $route) {

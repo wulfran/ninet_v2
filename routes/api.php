@@ -20,8 +20,11 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::post('/login', ['as' => 'api.login', 'uses' => 'Api\UsersController@login']);
 
-Route::get('/users', ['as' => 'users.list', 'uses' => 'Api\UsersController@index'])->middleware('auth:api');
 
+Route::group(['prefix' => 'panel/', 'as' => 'panel.', 'middleware' => 'auth:api'], function () {
+    Route::get('/users', ['as' => 'users.list', 'uses' => 'Api\UsersController@index'])->middleware('auth:api');
+    Route::get('/companies', ['as' => 'companies.list', 'uses' => 'Api\CompaniesController@index']);
+});
 
 Route::get('/test', function (){
     return 'Success';
