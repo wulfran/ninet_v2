@@ -18,7 +18,9 @@
                             <v-list-item-icon>
                                 <v-icon>{{ item.icon }}</v-icon>
                             </v-list-item-icon>
-                            <v-list-item-title @click="link(item.name)">{{ item.display }}</v-list-item-title>
+                            <v-list-item-title>
+                                <router-link :to="{ name: item.name} ">{{ item.display }}</router-link>
+                            </v-list-item-title>
                         </v-list-item>
                     </template>
 
@@ -75,11 +77,20 @@
             },
             buildMenu() {
                 this.menu = [];
-                if (/^(panel.*)$/.test(this.$router.currentRoute.name)) {
-                    this.setMenuItems(1)
-                } else {
-                    this.setMenuItems(0);
-                }
+                this.$router.options.routes.forEach(route => {
+                    route.children.forEach(child => {
+                        this.menu.push({
+                            display: child.display,
+                            icon: child.icon,
+                            name: child.name,
+                        })
+                    })
+                })
+                // if (/^(panel.*)$/.test(this.$router.currentRoute.name)) {
+                //     this.setMenuItems(1)
+                // } else {
+                //     this.setMenuItems(0);
+                // }
             },
             setMenuItems(menuType) {
                 if(menuType === 1) {
@@ -93,7 +104,7 @@
                     this.menu.push({
                         display: route.display,
                         icon: route.icon,
-                        name: route.name
+                        name: route.name,
                     })
                 });
                 if (menuType !== 1) {

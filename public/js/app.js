@@ -2156,6 +2156,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -2180,16 +2182,25 @@ __webpack_require__.r(__webpack_exports__);
       }
     },
     buildMenu: function buildMenu() {
-      this.menu = [];
+      var _this2 = this;
 
-      if (/^(panel.*)$/.test(this.$router.currentRoute.name)) {
-        this.setMenuItems(1);
-      } else {
-        this.setMenuItems(0);
-      }
+      this.menu = [];
+      this.$router.options.routes.forEach(function (route) {
+        route.children.forEach(function (child) {
+          _this2.menu.push({
+            display: child.display,
+            icon: child.icon,
+            name: child.name
+          });
+        });
+      }); // if (/^(panel.*)$/.test(this.$router.currentRoute.name)) {
+      //     this.setMenuItems(1)
+      // } else {
+      //     this.setMenuItems(0);
+      // }
     },
     setMenuItems: function setMenuItems(menuType) {
-      var _this2 = this;
+      var _this3 = this;
 
       if (menuType === 1) {
         this.menu.push({
@@ -2200,7 +2211,7 @@ __webpack_require__.r(__webpack_exports__);
       }
 
       this.$router.options.routes[menuType].children.forEach(function (route) {
-        _this2.menu.push({
+        _this3.menu.push({
           display: route.display,
           icon: route.icon,
           name: route.name
@@ -37991,14 +38002,14 @@ var render = function() {
                           _vm._v(" "),
                           _c(
                             "v-list-item-title",
-                            {
-                              on: {
-                                click: function($event) {
-                                  return _vm.link(item.name)
-                                }
-                              }
-                            },
-                            [_vm._v(_vm._s(item.display))]
+                            [
+                              _c(
+                                "router-link",
+                                { attrs: { to: { name: item.name } } },
+                                [_vm._v(_vm._s(item.display))]
+                              )
+                            ],
+                            1
                           )
                         ],
                         1
