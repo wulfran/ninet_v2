@@ -8,3 +8,25 @@
 @import '~bootstrap/scss/bootstrap';
 
 @import '~vuetify/dist/vuetify.min.css';
+
+
+//custom
+.page-margins {
+    margin: 0 25px;
+}
+
+//width
+.w-1\/10 {
+    width: 10%;
+}
+.w-15p {
+    width: 15%
+}
+.w-85p {
+    width: 85%;
+}
+
+//height
+.height-content{
+    min-height: calc(100vh - 85px);
+}

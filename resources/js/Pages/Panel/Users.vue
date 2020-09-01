@@ -2,10 +2,6 @@
     <div>
         <h1>Users</h1>
         <div class="">
-            <v-data-table
-                :headers="headers"
-                :items="users"
-            />
         </div>
     </div>
 </template>

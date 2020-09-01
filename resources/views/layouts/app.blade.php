@@ -12,7 +12,8 @@
     <!-- Scripts -->
     <script>
         window.APP = {
-            authToken: '{{ \Illuminate\Support\Facades\Cookie::get(\Laravel\Passport\Passport::cookie()) }}'
+            authToken: '{{ \Illuminate\Support\Facades\Cookie::get(\Laravel\Passport\Passport::cookie()) }}',
+            name: '{{ config('app.name') }}',
         }
     </script>
     <!-- Fonts -->

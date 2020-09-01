@@ -10939,3 +10939,23 @@ a.text-dark:focus {
   }
 }
 
+.page-margins {
+  margin: 0 25px;
+}
+
+.w-1\/10 {
+  width: 10%;
+}
+
+.w-15p {
+  width: 15%;
+}
+
+.w-85p {
+  width: 85%;
+}
+
+.height-content {
+  min-height: calc(100vh - 85px);
+}
+
