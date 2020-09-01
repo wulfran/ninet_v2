@@ -1,5 +1,5 @@
 import Dashboard from './Dashboard';
 import Users from './Users';
-import Datatable from "./Datatable";
+import Companies from "./Companies";
 
-export default { Dashboard, Users, Datatable }
+export default { Dashboard, Users, Companies }

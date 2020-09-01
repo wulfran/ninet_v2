@@ -42,7 +42,7 @@ export default [
                 display: 'Companies',
                 icon: 'mdi-account-multiple',
                 apiUrl: 'companies',
-                component: Panel.Datatable
+                component: Panel.Companies
             },
         ]
     },
