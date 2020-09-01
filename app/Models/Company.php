@@ -12,6 +12,10 @@ class Company extends Model
 
     protected $dates = ['created_at', 'updated_at'];
 
+    protected $casts = [
+        'created_at' => 'datetime'
+    ];
+
     public function users()
     {
         return $this->belongsToMany(User::class, 'company_users');

@@ -21,7 +21,7 @@
                     </div>
                 </template>
             </div>
-            <div class="bg-info w-85p">
+            <div class="bg-gray w-85p">
                 <router-view></router-view>
             </div>
         </div>
