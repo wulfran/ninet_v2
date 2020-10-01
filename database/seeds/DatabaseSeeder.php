@@ -17,7 +17,6 @@ class DatabaseSeeder extends Seeder
         Artisan::call('countries:sync');
 
         $this->call(UsersTableSeeder::class);
-        $this->call(ShoppingListsTableSeeder::class);
         $this->call(CompaniesTableSeeder::class);
     }
 }
