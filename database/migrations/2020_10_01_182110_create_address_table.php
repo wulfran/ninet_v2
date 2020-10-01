@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateAddressesTable extends Migration
+class CreateAddressTable extends Migration
 {
     /**
      * Run the migrations.
@@ -19,7 +19,12 @@ class CreateAddressesTable extends Migration
             $table->string('street_number');
             $table->string('post_code');
             $table->string('city');
-            $table->string('country');
+            $table->bigInteger('country_id')->unsigned()->index();
+            $table->foreign('country_id')
+                ->references('id')
+                ->on('countries')
+                ->onDelete('CASCADE')
+                ->onUpdate('CASCADE');
         });
     }
 
@@ -30,6 +35,6 @@ class CreateAddressesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('addresses');
+        Schema::dropIfExists('address');
     }
 }
