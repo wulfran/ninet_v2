@@ -25,7 +25,7 @@ class CompaniesController extends Controller
      */
     public function index()
     {
-        $companies = Company::all();
+        $companies = Company::with('address')->get();
         $labels = $this->companyService->getLabels();
 
         return response()->json([

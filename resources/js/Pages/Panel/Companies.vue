@@ -20,7 +20,8 @@
                 </template>
                 <template slot="table-row" slot-scope="props" v-if="props.column.field === 'actions'">
                     <div class="d-flex items-center justify-content-center">
-                        <div class="mx-1 cursor-pointer" @click="details">
+                        <div class="mx-1 cursor-pointer" @click="details(props.row)" data-toggle="modal"
+                             data-target="#detailsModal">
                             <svg viewBox="0 0 20 20" fill="currentColor" class="eye w-20 h-20">
                                 <path d="M10 12a2 2 0 100-4 2 2 0 000 4z"></path>
                                 <path fill-rule="evenodd"
@@ -39,6 +40,54 @@
                 </template>
             </vue-good-table>
         </div>
+        <div class="modal fade" id="detailsModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+             aria-hidden="true">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">{{ modalTitle }}</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-12 border-bottom px-2">
+                                <p class="font-weight-bold">Company data</p>
+                            </div>
+                        </div>
+                        <div class="row py-2 my-2">
+                            <div class="col-12 form-group">
+                                <label for="company-name">Company name</label>
+                                <input id="company-name" class="form-control" type="text" v-model="company.name">
+                            </div>
+                            <div class="col-12 form-group">
+                                <label for="tax-number">Tax number</label>
+                                <input id="tax-number" class="form-control" type="text" v-model="company.tax_number">
+                            </div>
+                            <div class="col-12 form-group">
+                                <label for="description">Description</label>
+                                <textarea name="description" id="description" rows="4" class="form-control"
+                                          v-model="company.description">
+                                </textarea>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12 border-bottom px-2">
+                                <p class="font-weight-bold">Address</p>
+                            </div>
+                        </div>
+                        <div class="row">
+
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary">Save changes</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </template>
 
@@ -50,6 +99,20 @@ export default {
             headers: [],
             companies: [],
             dialog: false,
+            company: {
+                id: 0,
+                name: null,
+                description: null,
+                tax_number: null,
+            },
+            address: {
+                id: 0,
+                street: null,
+                street_umber: null,
+                post_code: null,
+                city: null,
+                country: null,
+            }
         }
     },
     created() {
@@ -76,8 +139,14 @@ export default {
         deleteRow(row) {
             console.log(row);
         },
-        details() {
-            
+        details(row) {
+            this.address = row.address;
+            this.company = row;
+        }
+    },
+    computed: {
+        modalTitle: function () {
+            return (this.company.id === 0 ? 'Create' : 'Edit') + ' company';
         }
     },
     filters: {

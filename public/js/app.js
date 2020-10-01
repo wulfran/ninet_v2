@@ -1973,13 +1973,76 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
       authToken: window.APP.authToken,
       headers: [],
       companies: [],
-      dialog: false
+      dialog: false,
+      company: {
+        id: 0,
+        name: null,
+        description: null,
+        tax_number: null
+      },
+      address: {
+        id: 0,
+        street: null,
+        street_umber: null,
+        post_code: null,
+        city: null,
+        country: null
+      }
     };
   },
   created: function created() {
@@ -2014,7 +2077,15 @@ __webpack_require__.r(__webpack_exports__);
     deleteRow: function deleteRow(row) {
       console.log(row);
     },
-    details: function details() {}
+    details: function details(row) {
+      this.address = row.address;
+      this.company = row;
+    }
+  },
+  computed: {
+    modalTitle: function modalTitle() {
+      return (this.company.id === 0 ? 'Create' : 'Edit') + ' company';
+    }
   },
   filters: {
     formatLabel: function formatLabel(value) {
@@ -53682,7 +53753,15 @@ var render = function() {
                                 "div",
                                 {
                                   staticClass: "mx-1 cursor-pointer",
-                                  on: { click: _vm.details }
+                                  attrs: {
+                                    "data-toggle": "modal",
+                                    "data-target": "#detailsModal"
+                                  },
+                                  on: {
+                                    click: function($event) {
+                                      return _vm.details(props.row)
+                                    }
+                                  }
                                 },
                                 [
                                   _c(
@@ -53765,10 +53844,213 @@ var render = function() {
         )
       ],
       1
+    ),
+    _vm._v(" "),
+    _c(
+      "div",
+      {
+        staticClass: "modal fade",
+        attrs: {
+          id: "detailsModal",
+          tabindex: "-1",
+          role: "dialog",
+          "aria-labelledby": "exampleModalLabel",
+          "aria-hidden": "true"
+        }
+      },
+      [
+        _c(
+          "div",
+          { staticClass: "modal-dialog modal-lg", attrs: { role: "document" } },
+          [
+            _c("div", { staticClass: "modal-content" }, [
+              _c("div", { staticClass: "modal-header" }, [
+                _c(
+                  "h5",
+                  {
+                    staticClass: "modal-title",
+                    attrs: { id: "exampleModalLabel" }
+                  },
+                  [_vm._v(_vm._s(_vm.modalTitle))]
+                ),
+                _vm._v(" "),
+                _vm._m(0)
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "modal-body" }, [
+                _vm._m(1),
+                _vm._v(" "),
+                _c("div", { staticClass: "row py-2 my-2" }, [
+                  _c("div", { staticClass: "col-12 form-group" }, [
+                    _c("label", { attrs: { for: "company-name" } }, [
+                      _vm._v("Company name")
+                    ]),
+                    _vm._v(" "),
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.company.name,
+                          expression: "company.name"
+                        }
+                      ],
+                      staticClass: "form-control",
+                      attrs: { id: "company-name", type: "text" },
+                      domProps: { value: _vm.company.name },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(_vm.company, "name", $event.target.value)
+                        }
+                      }
+                    })
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-12 form-group" }, [
+                    _c("label", { attrs: { for: "tax-number" } }, [
+                      _vm._v("Tax number")
+                    ]),
+                    _vm._v(" "),
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.company.tax_number,
+                          expression: "company.tax_number"
+                        }
+                      ],
+                      staticClass: "form-control",
+                      attrs: { id: "tax-number", type: "text" },
+                      domProps: { value: _vm.company.tax_number },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(
+                            _vm.company,
+                            "tax_number",
+                            $event.target.value
+                          )
+                        }
+                      }
+                    })
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-12 form-group" }, [
+                    _c("label", { attrs: { for: "description" } }, [
+                      _vm._v("Description")
+                    ]),
+                    _vm._v(" "),
+                    _c("textarea", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.company.description,
+                          expression: "company.description"
+                        }
+                      ],
+                      staticClass: "form-control",
+                      attrs: {
+                        name: "description",
+                        id: "description",
+                        rows: "4"
+                      },
+                      domProps: { value: _vm.company.description },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(
+                            _vm.company,
+                            "description",
+                            $event.target.value
+                          )
+                        }
+                      }
+                    })
+                  ])
+                ]),
+                _vm._v(" "),
+                _vm._m(2),
+                _vm._v(" "),
+                _c("div", { staticClass: "row" })
+              ]),
+              _vm._v(" "),
+              _vm._m(3)
+            ])
+          ]
+        )
+      ]
     )
   ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "button",
+      {
+        staticClass: "close",
+        attrs: {
+          type: "button",
+          "data-dismiss": "modal",
+          "aria-label": "Close"
+        }
+      },
+      [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "row" }, [
+      _c("div", { staticClass: "col-12 border-bottom px-2" }, [
+        _c("p", { staticClass: "font-weight-bold" }, [_vm._v("Company data")])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "row" }, [
+      _c("div", { staticClass: "col-12 border-bottom px-2" }, [
+        _c("p", { staticClass: "font-weight-bold" }, [_vm._v("Address")])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "modal-footer" }, [
+      _c(
+        "button",
+        {
+          staticClass: "btn btn-secondary",
+          attrs: { type: "button", "data-dismiss": "modal" }
+        },
+        [_vm._v("Close")]
+      ),
+      _vm._v(" "),
+      _c(
+        "button",
+        { staticClass: "btn btn-primary", attrs: { type: "button" } },
+        [_vm._v("Save changes")]
+      )
+    ])
+  }
+]
 render._withStripped = true
 
 
