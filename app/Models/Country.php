@@ -18,4 +18,9 @@ class Country extends Model
     {
         return $this->hasMany(CallingCode::class);
     }
+
+    public function address()
+    {
+        return $this->hasMany(Address::class);
+    }
 }

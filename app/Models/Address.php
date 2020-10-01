@@ -18,4 +18,9 @@ class Address extends Model
     {
         return $this->hasOne(Company::class, 'address_id', 'id');
     }
+
+    public function country()
+    {
+        return $this->belongsTo(Country::class);
+    }
 }
