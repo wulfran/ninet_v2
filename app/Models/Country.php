@@ -11,7 +11,7 @@ class Country extends Model
     public $timestamps = false;
 
     protected $fillable = [
-        'name', 'alpha2Code', 'alpha3Code', 'region', 'timezone', 'flag'
+        'name', 'alpha2Code', 'alpha3Code', 'region', 'flag'
     ];
 
     public function callingCodes()

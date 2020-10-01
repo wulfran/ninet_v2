@@ -12,7 +12,6 @@ class CompaniesTableSeeder extends Seeder
      */
     public function run()
     {
-
         for ($i=0;$i<50;$i++) {
             $address = factory(Address::class)->create();
             $company = $address->company()->create(factory(\App\Models\Company::class)->make()->toArray());

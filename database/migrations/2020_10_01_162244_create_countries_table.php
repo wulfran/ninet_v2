@@ -19,7 +19,6 @@ class CreateCountriesTable extends Migration
             $table->string('alpha2Code')->nullable();
             $table->string('alpha3Code')->nullable();
             $table->string('region')->nullable();
-            $table->string('timezone')->nullable();
             $table->string('flag')->nullable();
         });
     }
