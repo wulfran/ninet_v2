@@ -87,7 +87,7 @@
                                 <input type="text" class="form-control" id="street_number" v-model="address.street_number">
                             </div>
                         </div>
-                        <div class="row">
+                        <div class="row my-2">
                             <div class="col-4">
                                 <label for="post_code">Post code</label>
                                 <input type="text" class="form-control" id="post_code" v-model="address.post_code">
@@ -97,10 +97,20 @@
                                 <input type="text" class="form-control" id="city" v-model="address.city">
                             </div>
                         </div>
+                        <div class="row my-2" style="z-index: 200">
+                            <div class="col-12 form-group">
+                                <vue-select :options="countries"
+                                            :reduce="name => name.id"
+                                            label="name"
+                                            v-model="address.country_id"
+                                            :clearable="false"
+                                />
+                            </div>
+                        </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary">Save changes</button>
+                        <button type="button" class="btn btn-primary" @click="saveData">Save changes</button>
                     </div>
                 </div>
             </div>
@@ -109,9 +119,17 @@
 </template>
 
 <script>
+import VueSelect from 'vue-select';
+import Modal from "../../components/Modal";
+
 export default {
+    components: {
+        VueSelect,
+        Modal,
+    },
     data() {
         return {
+            showModal: false,
             authToken: window.APP.authToken,
             headers: [],
             companies: [],
@@ -158,6 +176,7 @@ export default {
                 Authorization: 'Bearer ' + this.authToken,
             }
         }).then(({data}) => {
+            this.countries = data.countries;
         });
     },
     methods: {
@@ -167,7 +186,22 @@ export default {
         details(row) {
             this.address = row.address;
             this.company = row;
-        }
+        },
+        saveData() {
+            this.$axios.post('/api/panel/companies/', {
+                id: this.company.id,
+                company: this.company,
+                address: this.address
+            }, {
+                headers: {
+                    Authorization: 'Bearer ' + this.authToken,
+                }
+            }).then((response) => {
+                console.log(response);
+            }).catch((err)=>{
+                console.log(err);
+            });
+        },
     },
     computed: {
         modalTitle: function () {
