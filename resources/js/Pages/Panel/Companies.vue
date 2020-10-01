@@ -77,8 +77,25 @@
                                 <p class="font-weight-bold">Address</p>
                             </div>
                         </div>
+                        <div class="row mt-4">
+                            <div class="col-10 form-group">
+                                <label for="street">Street</label>
+                                <input type="text" class="form-control" id="street" v-model="address.street">
+                            </div>
+                            <div class="col-2 form-group">
+                                <label for="street_number">Street number</label>
+                                <input type="text" class="form-control" id="street_number" v-model="address.street_number">
+                            </div>
+                        </div>
                         <div class="row">
-
+                            <div class="col-4">
+                                <label for="post_code">Post code</label>
+                                <input type="text" class="form-control" id="post_code" v-model="address.post_code">
+                            </div>
+                            <div class="col-8">
+                                <label for="city">City</label>
+                                <input type="text" class="form-control" id="city" v-model="address.city">
+                            </div>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -98,6 +115,7 @@ export default {
             authToken: window.APP.authToken,
             headers: [],
             companies: [],
+            countries: [],
             dialog: false,
             company: {
                 id: 0,
@@ -108,10 +126,10 @@ export default {
             address: {
                 id: 0,
                 street: null,
-                street_umber: null,
+                street_number: null,
                 post_code: null,
                 city: null,
-                country: null,
+                country_id: null,
             }
         }
     },
@@ -134,10 +152,17 @@ export default {
             .catch((error) => {
                 console.log(error);
             });
+
+        this.$axios.get('/api/panel/countries',{
+            headers: {
+                Authorization: 'Bearer ' + this.authToken,
+            }
+        }).then(({data}) => {
+        });
     },
     methods: {
         deleteRow(row) {
-            console.log(row);
+            console.log(this.address);
         },
         details(row) {
             this.address = row.address;

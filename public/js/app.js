@@ -2022,12 +2022,30 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
       authToken: window.APP.authToken,
       headers: [],
       companies: [],
+      countries: [],
       dialog: false,
       company: {
         id: 0,
@@ -2038,10 +2056,10 @@ __webpack_require__.r(__webpack_exports__);
       address: {
         id: 0,
         street: null,
-        street_umber: null,
+        street_number: null,
         post_code: null,
         city: null,
-        country: null
+        country_id: null
       }
     };
   },
@@ -2072,10 +2090,17 @@ __webpack_require__.r(__webpack_exports__);
     })["catch"](function (error) {
       console.log(error);
     });
+    this.$axios.get('/api/panel/countries', {
+      headers: {
+        Authorization: 'Bearer ' + this.authToken
+      }
+    }).then(function (_ref2) {
+      var data = _ref2.data;
+    });
   },
   methods: {
     deleteRow: function deleteRow(row) {
-      console.log(row);
+      console.log(this.address);
     },
     details: function details(row) {
       this.address = row.address;
@@ -53980,7 +54005,127 @@ var render = function() {
                 _vm._v(" "),
                 _vm._m(2),
                 _vm._v(" "),
-                _c("div", { staticClass: "row" })
+                _c("div", { staticClass: "row mt-4" }, [
+                  _c("div", { staticClass: "col-10 form-group" }, [
+                    _c("label", { attrs: { for: "street" } }, [
+                      _vm._v("Street")
+                    ]),
+                    _vm._v(" "),
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.address.street,
+                          expression: "address.street"
+                        }
+                      ],
+                      staticClass: "form-control",
+                      attrs: { type: "text", id: "street" },
+                      domProps: { value: _vm.address.street },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(_vm.address, "street", $event.target.value)
+                        }
+                      }
+                    })
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-2 form-group" }, [
+                    _c("label", { attrs: { for: "street_number" } }, [
+                      _vm._v("Street number")
+                    ]),
+                    _vm._v(" "),
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.address.street_number,
+                          expression: "address.street_number"
+                        }
+                      ],
+                      staticClass: "form-control",
+                      attrs: { type: "text", id: "street_number" },
+                      domProps: { value: _vm.address.street_number },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(
+                            _vm.address,
+                            "street_number",
+                            $event.target.value
+                          )
+                        }
+                      }
+                    })
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "row" }, [
+                  _c("div", { staticClass: "col-4" }, [
+                    _c("label", { attrs: { for: "post_code" } }, [
+                      _vm._v("Post code")
+                    ]),
+                    _vm._v(" "),
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.address.post_code,
+                          expression: "address.post_code"
+                        }
+                      ],
+                      staticClass: "form-control",
+                      attrs: { type: "text", id: "post_code" },
+                      domProps: { value: _vm.address.post_code },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(
+                            _vm.address,
+                            "post_code",
+                            $event.target.value
+                          )
+                        }
+                      }
+                    })
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-8" }, [
+                    _c("label", { attrs: { for: "city" } }, [_vm._v("City")]),
+                    _vm._v(" "),
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.address.city,
+                          expression: "address.city"
+                        }
+                      ],
+                      staticClass: "form-control",
+                      attrs: { type: "text", id: "city" },
+                      domProps: { value: _vm.address.city },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(_vm.address, "city", $event.target.value)
+                        }
+                      }
+                    })
+                  ])
+                ])
               ]),
               _vm._v(" "),
               _vm._m(3)

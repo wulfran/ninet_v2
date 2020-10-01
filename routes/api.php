@@ -24,6 +24,7 @@ Route::post('/login', ['as' => 'api.login', 'uses' => 'Api\UsersController@login
 Route::group(['prefix' => 'panel/', 'as' => 'panel.', 'middleware' => 'auth:api'], function () {
     Route::get('/users', ['as' => 'users.list', 'uses' => 'Api\UsersController@index'])->middleware('auth:api');
     Route::get('/companies', ['as' => 'companies.list', 'uses' => 'Api\CompaniesController@index']);
+    Route::get('/countries', ['as' => 'countries.list', 'uses' => 'Api\CountriesController@index']);
 });
 
 Route::get('/test', function (){
