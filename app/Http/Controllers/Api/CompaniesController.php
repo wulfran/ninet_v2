@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Company\CompanyUpdateRequest;
+use App\Models\Address;
 use App\Models\Company;
 use App\Services\Company\CompanyService;
 use Illuminate\Http\JsonResponse;
@@ -59,13 +61,19 @@ class CompaniesController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param Request $request
-     * @param  int  $id
-     * @return Response
+     * @param CompanyUpdateRequest $request
+     * @return void
      */
-    public function update(Request $request, $id)
+    public function update(CompanyUpdateRequest $request)
     {
-        dd($request);
+        //TODO: clean this up
+        $data = $request->all();
+
+        $company = Company::find($data['company']['id']);
+        $address = Address::find($data['company']['address_id']);
+
+        $company->update($data['company']);
+        $address->update($data['address']);
     }
 
     /**
