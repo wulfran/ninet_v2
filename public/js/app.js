@@ -2128,14 +2128,15 @@ __webpack_require__.r(__webpack_exports__);
       this.company = row;
     },
     saveData: function saveData() {
-      this.$axios.post('/api/panel/companies/', {
+      this.$axios.patch('/api/panel/companies/' + this.company.id, {
         id: this.company.id,
         company: this.company,
         address: this.address
       }, {
         headers: {
           Authorization: 'Bearer ' + this.authToken
-        }
+        },
+        _method: 'patch'
       }).then(function (response) {
         console.log(response);
       })["catch"](function (err) {

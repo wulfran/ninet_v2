@@ -188,15 +188,16 @@ export default {
             this.company = row;
         },
         saveData() {
-            this.$axios.post('/api/panel/companies/', {
+            this.$axios.patch('/api/panel/companies/' + this.company.id, {
                 id: this.company.id,
                 company: this.company,
-                address: this.address
+                address: this.address,
             }, {
                 headers: {
                     Authorization: 'Bearer ' + this.authToken,
-                }
-            }).then((response) => {
+                },
+                _method: 'patch'
+            },).then((response) => {
                 console.log(response);
             }).catch((err)=>{
                 console.log(err);
