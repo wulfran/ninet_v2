@@ -62,7 +62,7 @@ class CompaniesController extends Controller
      * Update the specified resource in storage.
      *
      * @param CompanyUpdateRequest $request
-     * @return void
+     * @return JsonResponse
      */
     public function update(CompanyUpdateRequest $request)
     {
@@ -74,6 +74,10 @@ class CompaniesController extends Controller
 
         $company->update($data['company']);
         $address->update($data['address']);
+
+        return response()->json([
+            'message' => 'Success',
+        ], 200);
     }
 
     /**

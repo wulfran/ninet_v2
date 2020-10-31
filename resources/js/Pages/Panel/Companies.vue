@@ -109,7 +109,7 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal" ref="closeModal">Close</button>
                         <button type="button" class="btn btn-primary" @click="saveData">Save changes</button>
                     </div>
                 </div>
@@ -198,7 +198,7 @@ export default {
                 },
                 _method: 'patch'
             },).then((response) => {
-                console.log(response);
+                this.$refs.closeModal.click();
             }).catch((err)=>{
                 console.log(err);
             });

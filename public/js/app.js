@@ -2128,6 +2128,8 @@ __webpack_require__.r(__webpack_exports__);
       this.company = row;
     },
     saveData: function saveData() {
+      var _this2 = this;
+
       this.$axios.patch('/api/panel/companies/' + this.company.id, {
         id: this.company.id,
         company: this.company,
@@ -2138,7 +2140,7 @@ __webpack_require__.r(__webpack_exports__);
         },
         _method: 'patch'
       }).then(function (response) {
-        console.log(response);
+        _this2.$refs.closeModal.click();
       })["catch"](function (err) {
         console.log(err);
       });
@@ -54248,6 +54250,7 @@ var render = function() {
                 _c(
                   "button",
                   {
+                    ref: "closeModal",
                     staticClass: "btn btn-secondary",
                     attrs: { type: "button", "data-dismiss": "modal" }
                   },
