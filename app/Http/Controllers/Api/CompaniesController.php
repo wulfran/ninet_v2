@@ -84,10 +84,16 @@ class CompaniesController extends Controller
      * Remove the specified resource from storage.
      *
      * @param  int  $id
-     * @return Response
+     * @return JsonResponse
      */
     public function destroy($id)
     {
-        //
+        $company = Company::findOrFail($id);
+
+        $company->delete();
+
+        return response()->json([
+            'message' => 'Success'
+        ], 200);
     }
 }

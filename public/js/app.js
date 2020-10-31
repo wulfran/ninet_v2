@@ -2121,7 +2121,15 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     deleteRow: function deleteRow(row) {
-      console.log(this.address);
+      this.$axios["delete"]('/api/panel/companies/' + row.id, {
+        headers: {
+          Authorization: 'Bearer ' + this.authToken
+        }
+      }).then(function () {
+        console.log('deleted');
+      })["catch"](function (error) {
+        console.log(error);
+      });
     },
     details: function details(row) {
       this.address = row.address;
@@ -2137,8 +2145,7 @@ __webpack_require__.r(__webpack_exports__);
       }, {
         headers: {
           Authorization: 'Bearer ' + this.authToken
-        },
-        _method: 'patch'
+        }
       }).then(function (response) {
         _this2.$refs.closeModal.click();
       })["catch"](function (err) {
@@ -53906,7 +53913,11 @@ var render = function() {
                                 "div",
                                 {
                                   staticClass: "mx-1 cursor-pointer",
-                                  on: { click: _vm.deleteRow }
+                                  on: {
+                                    click: function($event) {
+                                      return _vm.deleteRow(props.row)
+                                    }
+                                  }
                                 },
                                 [
                                   _c(
