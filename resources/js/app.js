@@ -5,14 +5,15 @@
  */
 
 require('./bootstrap');
-import Vuetify from "vuetify";
+// import Vuetify from "vuetify";
 import VueRouter from 'vue-router';
 import router from './router';
 import VueAxios from './plugins/axios';
 import VueGoodTablePlugin from "vue-good-table";
+import { FontAwesome } from '@fortawesome/fontawesome-free';
 
 window.Vue = require('vue');
-Vue.use(Vuetify);
+// Vue.use(Vuetify);
 Vue.use(VueRouter);
 Vue.use(VueAxios);
 Vue.use(VueGoodTablePlugin);
@@ -36,9 +37,8 @@ Vue.component('example-component', require('./components/ExampleComponent.vue').
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-const vuetifyOptions = { };
+// const vuetifyOptions = { };
 const app = new Vue({
     el: '#app',
-    vuetify: new Vuetify(vuetifyOptions),
     router,
 });
