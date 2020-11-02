@@ -1,6 +1,7 @@
 import HomePage from './Pages/Home';
 import Layout from './layouts/Layout';
 import Panel from './Pages/Panel/index';
+import Invoices from "./Pages/Panel/Invoices/index";
 
 export default [
     {
@@ -37,6 +38,13 @@ export default [
                 apiUrl: 'companies',
                 component: Panel.Companies
             },
+            {
+                path: '/panel/invoices',
+                name: 'panel.invoices',
+                display: 'Invoices',
+                icon: 'mdi-account-multiple',
+                component: Invoices.Index,
+            }
         ]
     },
 ]
