@@ -9,11 +9,13 @@ import Vuetify from "vuetify";
 import VueRouter from 'vue-router';
 import router from './router';
 import VueAxios from './plugins/axios';
+import VueGoodTablePlugin from "vue-good-table";
 
 window.Vue = require('vue');
 Vue.use(Vuetify);
 Vue.use(VueRouter);
 Vue.use(VueAxios);
+Vue.use(VueGoodTablePlugin);
 
 /**
  * The following block of code may be used to automatically register your

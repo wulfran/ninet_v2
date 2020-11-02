@@ -1,9 +1,7 @@
 <?php
 
-use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Artisan;
-use Illuminate\Support\Facades\Hash;
 
 class DatabaseSeeder extends Seeder
 {
@@ -14,16 +12,11 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        User::create([
-            'email' => 'admin@ninet.pl',
-            'name' => 'admin',
-            'password' => Hash::make('secret'),
-        ]);
-
         Artisan::call('passport:install');
 
-        factory(User::class, 20)->create();
+        Artisan::call('countries:sync');
 
-        $this->call(ShoppingListsSeeder::class);
+        $this->call(UsersTableSeeder::class);
+        $this->call(CompaniesTableSeeder::class);
     }
 }

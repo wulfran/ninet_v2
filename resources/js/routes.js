@@ -23,18 +23,19 @@ export default [
         component: Layout,
         children: [
             {
-                path: '/panel/dashboard',
-                name: 'panel.dashboard',
-                display: 'Dashboard',
-                icon: 'mdi-tablet-dashboard',
-                component: Panel.Dashboard
-            },
-            {
                 path: '/panel/users',
                 name: 'panel.users',
                 display: 'Users',
                 icon: 'mdi-account-multiple',
                 component: Panel.Users
+            },
+            {
+                path: '/panel/companies',
+                name: 'panel.companies',
+                display: 'Companies',
+                icon: 'mdi-account-multiple',
+                apiUrl: 'companies',
+                component: Panel.Companies
             },
         ]
     },

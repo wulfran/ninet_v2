@@ -20,8 +20,15 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::post('/login', ['as' => 'api.login', 'uses' => 'Api\UsersController@login']);
 
-Route::get('/users', ['as' => 'users.list', 'uses' => 'Api\UsersController@index'])->middleware('auth:api');
 
+Route::group(['prefix' => 'panel/', 'as' => 'panel.', 'middleware' => 'auth:api'], function () {
+    Route::get('/users', ['as' => 'users.list', 'uses' => 'Api\UsersController@index'])->middleware('auth:api');
+    Route::get('/companies', ['as' => 'companies.list', 'uses' => 'Api\CompaniesController@index']);
+    Route::post('/companies', ['as' => 'companies.create', 'uses' => 'Api\CompaniesController@store']);
+    Route::patch('/companies/{company}', ['as' => 'companies.update', 'uses' => 'Api\CompaniesController@update']);
+    Route::delete('/companies/{company}', ['as' => 'companies.delete', 'uses' => 'Api\CompaniesController@destroy']);
+    Route::get('/countries', ['as' => 'countries.list', 'uses' => 'Api\CountriesController@index']);
+});
 
 Route::get('/test', function (){
     return 'Success';

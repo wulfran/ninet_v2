@@ -3,7 +3,7 @@
 use App\Models\ShoppingList;
 use Illuminate\Database\Seeder;
 
-class ShoppingListsSeeder extends Seeder
+class ShoppingListsTableSeeder extends Seeder
 {
     private $faker;
 

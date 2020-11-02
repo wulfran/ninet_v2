@@ -7,4 +7,44 @@
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
 
-@import '~vuetify/dist/vuetify.min.css';
+@import '~vue-good-table/dist/vue-good-table.css';
+
+@import "vue-select/src/scss/vue-select.scss";
+
+
+//custom
+.page-margins {
+    margin: 0 25px;
+}
+
+//width
+.w-1\/10 {
+    width: 10%;
+}
+.w-15p {
+    width: 15%
+}
+.w-85p {
+    width: 85%;
+}
+.w-20{
+    width: 20px;
+}
+
+//height
+.height-content{
+    min-height: calc(100vh - 85px);
+}
+
+.bg-gray {
+    background-color: $gray;
+}
+
+.h-20 {
+    height: 20px;
+}
+
+//cursors
+.cursor-pointer {
+    cursor: pointer;
+}

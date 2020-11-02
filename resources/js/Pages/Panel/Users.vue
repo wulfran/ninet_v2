@@ -2,10 +2,6 @@
     <div>
         <h1>Users</h1>
         <div class="">
-            <v-data-table
-                :headers="headers"
-                :items="users"
-            />
         </div>
     </div>
 </template>
@@ -20,7 +16,7 @@
             }
         },
         created() {
-            this.$axios.get('/api/users', {
+            this.$axios.get('/api/panel/users', {
                 headers: {
                     Authorization: 'Bearer ' + this.authToken,
                 }
@@ -33,7 +29,6 @@
                         });
                     });
                     this.users = data.users;
-                    console.log(this.users);
                 })
                 .catch(error => {
                     console.log(error);
