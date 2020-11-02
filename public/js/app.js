@@ -2052,6 +2052,14 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -2084,49 +2092,23 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   created: function created() {
-    var _this = this;
-
-    this.$axios.get('/api' + this.$route.path, {
-      headers: {
-        Authorization: 'Bearer ' + this.authToken
-      }
-    }).then(function (_ref) {
-      var data = _ref.data;
-
-      for (var attribute in data.labels) {
-        _this.headers.push({
-          label: data.labels[attribute],
-          field: attribute
-        });
-      }
-
-      _this.companies = data.data;
-
-      _this.headers.push({
-        label: 'Actions',
-        field: 'actions',
-        sortable: false
-      });
-    })["catch"](function (error) {
-      console.log(error);
-    });
-    this.$axios.get('/api/panel/countries', {
-      headers: {
-        Authorization: 'Bearer ' + this.authToken
-      }
-    }).then(function (_ref2) {
-      var data = _ref2.data;
-      _this.countries = data.countries;
-    });
+    this.getCompanies();
   },
   methods: {
+    test: function test() {
+      this.getCompanies();
+    },
     deleteRow: function deleteRow(row) {
+      var _this = this;
+
       this.$axios["delete"]('/api/panel/companies/' + row.id, {
         headers: {
           Authorization: 'Bearer ' + this.authToken
         }
       }).then(function () {
         console.log('deleted');
+
+        _this.getCompanies();
       })["catch"](function (error) {
         console.log(error);
       });
@@ -2136,7 +2118,38 @@ __webpack_require__.r(__webpack_exports__);
       this.company = row;
     },
     saveData: function saveData() {
+      console.log(1);
+
+      if (this.company.id !== 0) {
+        console.log(2);
+        this.updateCompany();
+      } else {
+        console.log(3);
+        this.createCompany();
+      }
+    },
+    createCompany: function createCompany() {
       var _this2 = this;
+
+      this.$axios.post('/api/panel/companies', {
+        company: this.company,
+        address: this.address
+      }, {
+        headers: {
+          Authorization: 'Bearer ' + this.authToken
+        }
+      }).then(function (response) {
+        _this2.getCompanies();
+
+        _this2.setInitData();
+
+        _this2.$refs.closeModal.click();
+      })["catch"](function (error) {
+        console.log(error);
+      });
+    },
+    updateCompany: function updateCompany() {
+      var _this3 = this;
 
       this.$axios.patch('/api/panel/companies/' + this.company.id, {
         id: this.company.id,
@@ -2147,10 +2160,66 @@ __webpack_require__.r(__webpack_exports__);
           Authorization: 'Bearer ' + this.authToken
         }
       }).then(function (response) {
-        _this2.$refs.closeModal.click();
+        _this3.setInitData();
+
+        _this3.$refs.closeModal.click();
       })["catch"](function (err) {
         console.log(err);
       });
+    },
+    getCompanies: function getCompanies() {
+      var _this4 = this;
+
+      this.companies = [];
+      this.headers = [];
+      this.$axios.get('/api' + this.$route.path, {
+        headers: {
+          Authorization: 'Bearer ' + this.authToken
+        }
+      }).then(function (_ref) {
+        var data = _ref.data;
+
+        for (var attribute in data.labels) {
+          _this4.headers.push({
+            label: data.labels[attribute],
+            field: attribute
+          });
+        }
+
+        _this4.companies = data.data;
+
+        _this4.headers.push({
+          label: 'Actions',
+          field: 'actions',
+          sortable: false
+        });
+      })["catch"](function (error) {
+        console.log(error);
+      });
+      this.$axios.get('/api/panel/countries', {
+        headers: {
+          Authorization: 'Bearer ' + this.authToken
+        }
+      }).then(function (_ref2) {
+        var data = _ref2.data;
+        _this4.countries = data.countries;
+      });
+    },
+    setInitData: function setInitData() {
+      this.company = {
+        id: 0,
+        name: null,
+        description: null,
+        tax_number: null
+      };
+      this.address = {
+        id: 0,
+        street: null,
+        street_number: null,
+        post_code: null,
+        city: null,
+        country_id: null
+      };
     }
   },
   computed: {
@@ -53832,6 +53901,12 @@ var render = function() {
     ]),
     _vm._v(" "),
     _c(
+      "button",
+      { staticClass: "btn btn-danger btn-md", on: { click: _vm.test } },
+      [_vm._v("Test")]
+    ),
+    _vm._v(" "),
+    _c(
       "div",
       {},
       [
@@ -53955,9 +54030,17 @@ var render = function() {
           },
           [
             _c("template", { slot: "table-actions" }, [
-              _c("button", { staticClass: "btn btn-info btn-md m-1" }, [
-                _vm._v("Add")
-              ])
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-info btn-md m-1",
+                  attrs: {
+                    "data-toggle": "modal",
+                    "data-target": "#detailsModal"
+                  }
+                },
+                [_vm._v("Add")]
+              )
             ])
           ],
           2
@@ -53994,11 +54077,27 @@ var render = function() {
                   [_vm._v(_vm._s(_vm.modalTitle))]
                 ),
                 _vm._v(" "),
-                _vm._m(0)
+                _c(
+                  "button",
+                  {
+                    staticClass: "close",
+                    attrs: {
+                      type: "button",
+                      "data-dismiss": "modal",
+                      "aria-label": "Close"
+                    },
+                    on: { click: _vm.setInitData }
+                  },
+                  [
+                    _c("span", { attrs: { "aria-hidden": "true" } }, [
+                      _vm._v("×")
+                    ])
+                  ]
+                )
               ]),
               _vm._v(" "),
               _c("div", { staticClass: "modal-body" }, [
-                _vm._m(1),
+                _vm._m(0),
                 _vm._v(" "),
                 _c("div", { staticClass: "row py-2 my-2" }, [
                   _c("div", { staticClass: "col-12 form-group" }, [
@@ -54098,7 +54197,7 @@ var render = function() {
                   ])
                 ]),
                 _vm._v(" "),
-                _vm._m(2),
+                _vm._m(1),
                 _vm._v(" "),
                 _c("div", { staticClass: "row mt-4" }, [
                   _c("div", { staticClass: "col-10 form-group" }, [
@@ -54233,8 +54332,13 @@ var render = function() {
                       "div",
                       { staticClass: "col-12 form-group" },
                       [
+                        _c("label", { attrs: { for: "country" } }, [
+                          _vm._v("Country")
+                        ]),
+                        _vm._v(" "),
                         _c("vue-select", {
                           attrs: {
+                            id: "country",
                             options: _vm.countries,
                             reduce: function(name) {
                               return name.id
@@ -54263,9 +54367,14 @@ var render = function() {
                   {
                     ref: "closeModal",
                     staticClass: "btn btn-secondary",
-                    attrs: { type: "button", "data-dismiss": "modal" }
+                    attrs: { type: "button", "data-dismiss": "modal" },
+                    on: { click: _vm.setInitData }
                   },
-                  [_vm._v("Close")]
+                  [
+                    _vm._v(
+                      "\n                        Close\n                    "
+                    )
+                  ]
                 ),
                 _vm._v(" "),
                 _c(
@@ -54286,23 +54395,6 @@ var render = function() {
   ])
 }
 var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "button",
-      {
-        staticClass: "close",
-        attrs: {
-          type: "button",
-          "data-dismiss": "modal",
-          "aria-label": "Close"
-        }
-      },
-      [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
-    )
-  },
   function() {
     var _vm = this
     var _h = _vm.$createElement

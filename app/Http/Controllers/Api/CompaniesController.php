@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Company\CompanyCreateRequest;
 use App\Http\Requests\Company\CompanyUpdateRequest;
 use App\Models\Address;
 use App\Models\Company;
@@ -39,12 +40,23 @@ class CompaniesController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param Request $request
-     * @return Response
+     * @param CompanyCreateRequest $request
+     * @return JsonResponse
      */
-    public function store(Request $request)
+    public function store(CompanyCreateRequest $request)
     {
-        //
+        try {
+            $address = Address::create($request->get('address'));
+            $company = $address->company()->create($request->get('company'));
+
+            return request()->json([
+                'message' => 'Success'
+            ], 200);
+        } catch (\Exception $e) {
+            return \response()->json([
+                'message' => $e->getMessage(),
+            ], 422);
+        }
     }
 
     /**

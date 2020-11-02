@@ -1,6 +1,7 @@
 <template>
     <div class="p-4">
         <h1>{{ this.$router.currentRoute.name | formatLabel }}</h1>
+        <button class="btn btn-danger btn-md" @click="test">Test</button>
         <div class="">
             <vue-good-table
                 :columns="headers"
@@ -16,7 +17,7 @@
                 }"
             >
                 <template slot="table-actions">
-                    <button class="btn btn-info btn-md m-1">Add</button>
+                    <button class="btn btn-info btn-md m-1" data-toggle="modal" data-target="#detailsModal">Add</button>
                 </template>
                 <template slot="table-row" slot-scope="props" v-if="props.column.field === 'actions'">
                     <div class="d-flex items-center justify-content-center">
@@ -46,7 +47,8 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="exampleModalLabel">{{ modalTitle }}</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+                                @click="setInitData">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
@@ -84,7 +86,8 @@
                             </div>
                             <div class="col-2 form-group">
                                 <label for="street_number">Street number</label>
-                                <input type="text" class="form-control" id="street_number" v-model="address.street_number">
+                                <input type="text" class="form-control" id="street_number"
+                                       v-model="address.street_number">
                             </div>
                         </div>
                         <div class="row my-2">
@@ -99,7 +102,9 @@
                         </div>
                         <div class="row my-2" style="z-index: 200">
                             <div class="col-12 form-group">
-                                <vue-select :options="countries"
+                                <label for="country">Country</label>
+                                <vue-select id="country"
+                                            :options="countries"
                                             :reduce="name => name.id"
                                             label="name"
                                             v-model="address.country_id"
@@ -109,7 +114,10 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal" ref="closeModal">Close</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal" ref="closeModal"
+                                @click="setInitData">
+                            Close
+                        </button>
                         <button type="button" class="btn btn-primary" @click="saveData">Save changes</button>
                     </div>
                 </div>
@@ -148,56 +156,63 @@ export default {
                 post_code: null,
                 city: null,
                 country_id: null,
-            }
+            },
         }
     },
     created() {
-        this.$axios.get('/api' + this.$route.path, {
-            headers: {
-                Authorization: 'Bearer ' + this.authToken,
-            }
-        }).then(({data}) => {
-            for (let attribute in data.labels) {
-                this.headers.push({
-                    label: data.labels[attribute],
-                    field: attribute
-                });
-            }
-            this.companies = data.data;
-
-            this.headers.push({label: 'Actions', field: 'actions', sortable: false});
-        })
-            .catch((error) => {
-                console.log(error);
-            });
-
-        this.$axios.get('/api/panel/countries',{
-            headers: {
-                Authorization: 'Bearer ' + this.authToken,
-            }
-        }).then(({data}) => {
-            this.countries = data.countries;
-        });
+        this.getCompanies();
     },
     methods: {
+        test() {
+            this.getCompanies();
+        },
         deleteRow(row) {
             this.$axios.delete('/api/panel/companies/' + row.id, {
                 headers: {
                     Authorization: 'Bearer ' + this.authToken,
                 },
             })
-            .then(() => {
-                console.log('deleted');
-            })
-            .catch((error) => {
-                console.log(error);
-            })
+                .then(() => {
+                    console.log('deleted');
+                    this.getCompanies();
+                })
+                .catch((error) => {
+                    console.log(error);
+                })
         },
         details(row) {
             this.address = row.address;
             this.company = row;
         },
         saveData() {
+            console.log(1);
+            if (this.company.id !== 0) {
+                console.log(2);
+                this.updateCompany();
+            } else {
+                console.log(3);
+                this.createCompany();
+            }
+        },
+        createCompany() {
+            this.$axios.post('/api/panel/companies', {
+                company: this.company,
+                address: this.address
+            }, {
+                headers: {
+                    Authorization: 'Bearer ' + this.authToken,
+                },
+            })
+                .then(response => {
+                    this.getCompanies();
+                    this.setInitData();
+                    this.$refs.closeModal.click();
+                })
+                .catch(error => {
+                    console.log(error);
+                })
+        },
+        updateCompany() {
             this.$axios.patch('/api/panel/companies/' + this.company.id, {
                 id: this.company.id,
                 company: this.company,
@@ -207,11 +222,58 @@ export default {
                     Authorization: 'Bearer ' + this.authToken,
                 },
             }).then((response) => {
+                this.setInitData();
                 this.$refs.closeModal.click();
-            }).catch((err)=>{
+            }).catch((err) => {
                 console.log(err);
             });
         },
+        getCompanies() {
+            this.companies = [];
+            this.headers = [];
+            this.$axios.get('/api' + this.$route.path, {
+                headers: {
+                    Authorization: 'Bearer ' + this.authToken,
+                }
+            }).then(({data}) => {
+                for (let attribute in data.labels) {
+                    this.headers.push({
+                        label: data.labels[attribute],
+                        field: attribute
+                    });
+                }
+                this.companies = data.data;
+
+                this.headers.push({label: 'Actions', field: 'actions', sortable: false});
+            })
+                .catch((error) => {
+                    console.log(error);
+                });
+
+            this.$axios.get('/api/panel/countries', {
+                headers: {
+                    Authorization: 'Bearer ' + this.authToken,
+                }
+            }).then(({data}) => {
+                this.countries = data.countries;
+            });
+        },
+        setInitData() {
+            this.company = {
+                id: 0,
+                name: null,
+                description: null,
+                tax_number: null,
+            };
+            this.address = {
+                id: 0,
+                street: null,
+                street_number: null,
+                post_code: null,
+                city: null,
+                country_id: null,
+            };
+        }
     },
     computed: {
         modalTitle: function () {
