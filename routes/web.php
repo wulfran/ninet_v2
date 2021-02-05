@@ -21,7 +21,7 @@ $panelRoutes = [
     '/panel/dashboard',
     '/panel/users',
     '/panel/companies',
-    '/panel/config',
+    '/panel/invoices',
 ];
 
 foreach ($panelRoutes as $route) {
