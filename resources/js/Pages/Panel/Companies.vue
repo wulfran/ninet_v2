@@ -1,7 +1,6 @@
 <template>
     <div class="p-4">
         <h1>{{ this.$router.currentRoute.name | formatLabel }}</h1>
-        <button class="btn btn-danger btn-md" @click="test">Test</button>
         <div class="">
             <vue-good-table
                 :columns="headers"
@@ -163,9 +162,6 @@ export default {
         this.getCompanies();
     },
     methods: {
-        test() {
-            this.getCompanies();
-        },
         deleteRow(row) {
             this.$axios.delete('/api/panel/companies/' + row.id, {
                 headers: {

@@ -13,7 +13,7 @@ export default [
                 path: '/',
                 name: 'home.index',
                 display: 'Home',
-                icon: 'mdi-home',
+                icon: 'fa-home',
                 component: HomePage.Index
             },
         ]
@@ -27,14 +27,14 @@ export default [
                 path: '/panel/users',
                 name: 'panel.users',
                 display: 'Users',
-                icon: 'mdi-account-multiple',
+                icon: 'fa-users',
                 component: Panel.Users
             },
             {
                 path: '/panel/companies',
                 name: 'panel.companies',
                 display: 'Companies',
-                icon: 'mdi-account-multiple',
+                icon: 'fa-building',
                 apiUrl: 'companies',
                 component: Panel.Companies
             },

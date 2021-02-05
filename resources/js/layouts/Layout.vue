@@ -17,7 +17,10 @@
             <div class="w-15p border">
                 <template v-for="item in menu">
                     <div class="text-center">
-                        <router-link class="menu-link" :to="{name: item.name }">{{ item.display }}</router-link>
+                        <router-link class="menu-link" :to="{name: item.name }">
+                            <i class="fas" :class="item.icon"></i>
+                            {{ item.display }}
+                        </router-link>
                     </div>
                 </template>
             </div>
