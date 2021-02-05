@@ -21,4 +21,26 @@ class Invoice extends Model
     {
         return $this->hasMany(InvoicePosition::class);
     }
+
+    CONST PAYMENT_METHODS = [
+        'cash' => 'Cash',
+        'transfer' => 'Transfer'
+    ];
+
+    /**
+     * @return string[]
+     */
+    public function getPaymentMethods(): array
+    {
+        return self::PAYMENT_METHODS;
+    }
+
+    /**
+     * @param string $method
+     * @return string
+     */
+    public function getPaymentMethod(string $method): string
+    {
+        return self::PAYMENT_METHODS[$method];
+    }
 }
