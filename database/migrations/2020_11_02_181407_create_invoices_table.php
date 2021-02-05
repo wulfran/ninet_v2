@@ -17,7 +17,7 @@ class CreateInvoicesTable extends Migration
             $table->id();
             $table->string('number');
             $table->string('type');
-            $table->string('price_type');
+            $table->string('payment_method');
             $table->boolean('paid');
             $table->dateTime('issue_date');
             $table->dateTime('sell_date');
